@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  database:
+    build: database
+    container_name: postgres-platzi
+    ports:
+      - "5432:5432"
+    enviroment:
+      POSTGRES_DB: platzi_go
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+
+  application:
+    build: .
+    container_name: platzi_go_server
+    ports:
+      - "5050:5050"
+    enviroment:
+      PORT: 5050
+      JWT_SECRET: secret
+      DATABASE_URL: postgres://postgres:root@database:5432/platzi_go?sslmode=disable
